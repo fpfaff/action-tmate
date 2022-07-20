@@ -40,7 +40,10 @@ export async function run() {
         if (distro === "alpine") {
           // for set -e workaround, we need to install bash because alpine doesn't have it
           await execShellCommand(optionalSudoPrefix + 'apk add openssh-client xz bash');
-        } else {
+        } else if (distro === "centos") {
+          await execShellCommand(optionalSudoPrefix + 'yum install -y openssl xz');
+        }
+         else {
           await execShellCommand(optionalSudoPrefix + 'apt-get update');
           await execShellCommand(optionalSudoPrefix + 'apt-get install -y openssh-client xz-utils');
         }
